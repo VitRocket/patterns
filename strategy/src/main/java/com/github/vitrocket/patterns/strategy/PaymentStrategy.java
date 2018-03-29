@@ -1,7 +1,7 @@
-package PACKAGE_NAME;
+package com.github.vitrocket.patterns.strategy;
 
-/**
- * @author by Vitaliy on 29.03.2018.
- */
-public class PaymentStrategy {
+import java.math.BigDecimal;
+
+public interface PaymentStrategy {
+    void pay(BigDecimal amount);
 }
