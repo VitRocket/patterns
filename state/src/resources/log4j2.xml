@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p | %19.19d{yyyy-MM-dd HH:mm:ss} | [%10.10t]  %30.30C{3} (%20.20F:%L)   %m%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="vitrocket.patterns" level="debug" />
+        <Root level="info">
+            <AppenderRef ref="STDOUT" />
+        </Root>
+    </Loggers>
+</Configuration>
