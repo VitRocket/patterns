@@ -18,15 +18,15 @@ public class App {
         log.info("Hello!");
 
         StrategyPrintFactory factory = new StrategyPrintFactory();
-        StrategyPrint printer = factory.getPrinter(new Photo());
-        printer.print();
+        StrategyPrinting printer = factory.getPrinter(new Photo());
+        printer.doPrint();
 
         printer = factory.getPrinter(new Document());
-        printer.print();
+        printer.doPrint();
 
         try {
             printer = factory.getPrinter(new NewsPaper());
-            printer.print();
+            printer.doPrint();
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
         }
@@ -35,17 +35,17 @@ public class App {
 
 class StrategyPrintFactory {
 
-    private static Map<String, Supplier<StrategyPrint>> map = new HashMap<>();
+    private static Map<String, Supplier<StrategyPrinting>> map = new HashMap<>();
 
     static {
-        map.put("PHOTO", PrintPhoto::new);
-        map.put("DOCUMENT", PrintDocument::new);
+        map.put("PHOTO", PrinterPhoto::new);
+        map.put("DOCUMENT", PrinterDocument::new);
     }
 
-    StrategyPrint getPrinter(Model model) {
-        Supplier<StrategyPrint> supplier = map.get(model.getType().name().toUpperCase());
+    StrategyPrinting getPrinter(Model model) {
+        Supplier<StrategyPrinting> supplier = map.get(model.getType().name().toUpperCase());
         if (supplier != null) {
-            StrategyPrint printer = supplier.get();
+            StrategyPrinting printer = supplier.get();
             printer.setModel(model);
             return printer;
         }
@@ -83,30 +83,30 @@ class NewsPaper extends Model {
     }
 }
 
-interface StrategyPrint {
+interface StrategyPrinting {
     void setModel(Model model);
-    void print();
+    void doPrint();
 }
 
 @NoArgsConstructor
-class Print {
+class Printer {
     @Getter
     @Setter
     private Model model;
 }
 
 @Log4j2
-class PrintPhoto extends Print implements StrategyPrint {
+class PrinterPhoto extends Printer implements StrategyPrinting {
     @Override
-    public void print() {
+    public void doPrint() {
         log.info("Printing " + super.getModel().getType().name());
     }
 }
 
 @Log4j2
-class PrintDocument extends Print implements StrategyPrint {
+class PrinterDocument extends Printer implements StrategyPrinting {
     @Override
-    public void print() {
+    public void doPrint() {
         log.info("Printing " + getModel().getType().name());
     }
 }
