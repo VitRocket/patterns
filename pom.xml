@@ -17,6 +17,7 @@
         <module>state</module>
         <module>strategy</module>
         <module>javademo</module>
+        <module>factory</module>
     </modules>
 
     <dependencies>
